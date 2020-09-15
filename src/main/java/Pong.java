@@ -14,7 +14,7 @@ public class Pong extends HttpServlet {
         res.setContentType("text/html");
         PrintWriter out = res.getWriter();
         try {
-            out.println("<a href=\"/ping\">PING!</a>");
+            out.println("<h1 align=\"right\"><a href=\"/ping\">PING!</a></h1>");
         } finally {
             out.close();
         }

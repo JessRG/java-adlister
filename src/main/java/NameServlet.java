@@ -11,9 +11,20 @@ public class NameServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         res.setContentType("text/html");
         PrintWriter out = res.getWriter();
-        String name = "Jesus Garza";
+        String name;
 
         try {
+            if (req.getParameter("firstName") != null && req.getParameter("lastName") != null) {
+                name = req.getParameter("firstName")+ " " + req.getParameter("lastName");
+            } else {
+                if(req.getParameter("firstName") != null) {
+                    name = req.getParameter("firstName");
+                } else if(req.getParameter("lastName") != null) {
+                    name = req.getParameter("lastName");
+                } else {
+                    name = "John Doe";
+                }
+            }
             out.println(String.format("<h1>Hello %s!</h1>", name));
         } finally {
             out.close();
