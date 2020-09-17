@@ -3,9 +3,12 @@
 
 <html>
 <head>
-    <title>Login</title>
+    <jsp:include page="partials/head.jsp">
+        <jsp:param name="title" value="Login"/>
+    </jsp:include>
 </head>
 <body>
+    <jsp:include page="partials/navbar.jsp"></jsp:include>
     <form method="POST" action="/login.jsp">
         <label for="username">Username: </label>
         <input type="text" id="username" name="username" /><br/>
@@ -27,21 +30,8 @@
                 }
             %>
         </c:when>
-        <c:otherwise>
-        <%-- Need to figure out what to place here --%>
-        </c:otherwise>
     </c:choose>
 
-
-<%--    <%--%>
-<%--        if(request.getParameter("username") == null && request.getParameter("password") == null) {--%>
-<%--            response.getWriter().println("<h1>Incorrect username and password entry</h1>");--%>
-<%--        } else {--%>
-<%--            if(request.getParameter("username").equalsIgnoreCase("admin")--%>
-<%--                    && request.getParameter("password").equalsIgnoreCase("password")) {--%>
-<%--                response.sendRedirect("/profile.jsp");--%>
-<%--            }--%>
-<%--        }--%>
-<%--    %>--%>
+    <jsp:include page="partials/scripts.jsp"></jsp:include>
 </body>
 </html>
