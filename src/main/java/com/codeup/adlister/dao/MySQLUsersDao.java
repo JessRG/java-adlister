@@ -37,7 +37,7 @@ public class MySQLUsersDao implements Users {
     }
 
     public PreparedStatement selectUserQuery(String username) throws SQLException {
-        String sql = "SELECT * FROM users WHERE username LIKE ?";
+        String sql = "SELECT * FROM users WHERE username = ?";
         PreparedStatement stmt = connection.prepareStatement(sql);
         stmt.setString(1, username);
         return stmt;
