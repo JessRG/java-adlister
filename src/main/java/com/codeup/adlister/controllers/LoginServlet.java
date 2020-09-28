@@ -1,5 +1,8 @@
 package com.codeup.adlister.controllers;
 
+import com.codeup.adlister.dao.DaoFactory;
+import com.codeup.adlister.models.User;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,21 +20,30 @@ public class LoginServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
         // TODO: find a record in your database that matches the submitted password
+        User user = DaoFactory.getUsersDao().findByUsername(username);
+
         // TODO: make sure we find a user with that username
+        if(user.getUsername() == null) {
+            request.setAttribute("message", "There was a problem with the credentials.");
+            request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+        }
+
         // TODO: check the submitted password against what you have in your database
         boolean validAttempt = false;
+        if (user.getPassword().equals(password)) validAttempt = true;
 
         if (validAttempt) {
             // TODO: store the logged in user object in the session, instead of just the username
-            request.getSession().setAttribute("user", username);
+            request.getSession().setAttribute("user", user);
             response.sendRedirect("/profile");
         } else {
-            response.sendRedirect("/login");
+            request.setAttribute("message", "There was a problem with the credentials.");
+            response.sendRedirect("/WEB-INF/login.jsp");
         }
     }
 }
